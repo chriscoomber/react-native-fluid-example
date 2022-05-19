@@ -4,9 +4,12 @@ export const MIN_WIDTH = 360;
 export const MIN_HEIGHT = 320;
 
 export interface Scaling {
-    width(widthAtMin: number): number;
-    height(heightAtMin: number): number;
-    size(sizeAtMin: number): number;
+    /** Scale with viewport width - unchanged below min width */
+    scaleW(widthAtMin: number): number;
+    /** Scale with viewport height - unchanged below min height */
+    scaleH(heightAtMin: number): number;
+    /** Scale with viewport overall size - unchanged below min height or min width */
+    scale(sizeAtMin: number): number;
 }
 
 export default function useScaling(): Scaling {
@@ -17,8 +20,8 @@ export default function useScaling(): Scaling {
     const windowScale = Math.min(widthScale, heightScale)
 
     return {
-        width: widthScale < 1 ? x => x : x => x * widthScale,
-        height: heightScale < 1 ? x => x : x => x * heightScale,
-        size: windowScale < 1 ? x => x : x => x * windowScale
+        scaleW: widthScale < 1 ? x => x : x => x * widthScale,
+        scaleH: heightScale < 1 ? x => x : x => x * heightScale,
+        scale: windowScale < 1 ? x => x : x => x * windowScale
     }
 }

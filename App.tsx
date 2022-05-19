@@ -4,18 +4,19 @@ import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill, BsFillDiamondFil
 
 export default function App() {
   const scaling = useScaling();
+  const { scaleW, scaleH, scale} = scaling;
   const styles = stylesForScaling(scaling);
 
   return (
     <View style={styles.mainColumn}>
       <View style={styles.topBar}>
         <TouchableOpacity>
-          <BsFillArrowLeftSquareFill size={scaling.size(40)}/>
+          <BsFillArrowLeftSquareFill size={scale(40)}/>
         </TouchableOpacity>
         <TouchableOpacity>
-        <BsFillArrowRightSquareFill size={scaling.size(40)}/>
+        <BsFillArrowRightSquareFill size={scale(40)}/>
         </TouchableOpacity>
-        <Text style={{fontSize: scaling.size(20), marginLeft: scaling.width(30)}}>Title</Text>
+        <Text style={{fontSize: scale(20), marginLeft: scaleW(30)}}>Title</Text>
       </View>
       
       <View style={styles.content}>
@@ -37,35 +38,35 @@ export default function App() {
           <Text style={styles.equationBorderTextEqualSpacing}>?</Text>
         </View>
 
-        <View style={[styles.input, {height: scaling.height(150)}]}>
+        <View style={[styles.input, {height: scaleH(150)}]}>
           <View style={styles.hintRow}>
             <View style={styles.hintColumn}>
-              <BsFillDiamondFill size={scaling.size(20)}/>
-              <BsFillDiamondFill size={scaling.size(20)}/>
-              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
             </View>
             <View style={styles.hintColumn}>
-              <BsFillDiamondFill size={scaling.size(20)}/>
-              <BsFillDiamondFill size={scaling.size(20)}/>
-              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
             </View>
             <View style={styles.hintColumn}>
-              <BsFillDiamondFill size={scaling.size(20)}/>
-              <BsFillDiamondFill size={scaling.size(20)}/>
-              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
+              <BsFillDiamondFill size={scale(20)}/>
             </View>
           </View>
         </View>
       </View>
 
       <View style={styles.bottomBar}>
-        <Text style={{fontSize: scaling.size(10)}}>This is some small print</Text>
+        <Text style={{fontSize: scale(10)}}>This is some small print</Text>
       </View>
     </View>
   );
 }
 
-const stylesForScaling = (s: Scaling) => StyleSheet.create({
+const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create({
   mainColumn: {
     flex: 1,
     flexDirection: 'column',
@@ -83,7 +84,7 @@ const stylesForScaling = (s: Scaling) => StyleSheet.create({
     backgroundColor: '#cfc',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    heignt: s.size(45)
+    heignt: scale(45)
   },
 
   content: {
@@ -107,20 +108,20 @@ const stylesForScaling = (s: Scaling) => StyleSheet.create({
     backgroundColor: '#ffe',
     justifyContent: 'center',
     alignItems: 'center',
-    height: s.height(50),
-    gap: s.width(10)
+    height: scaleH(50),
+    gap: scaleW(10)
   },
 
   equationBorderText: {
-    fontSize: s.size(25),
-    borderWidth: s.size(2),
-    borderRadius: s.size(10),
-    paddingHorizontal: s.width(6),
-    paddingVertical: s.height(6)
+    fontSize: scale(25),
+    borderWidth: scale(2),
+    borderRadius: scale(10),
+    paddingHorizontal: scaleW(6),
+    paddingVertical: scaleH(6)
   },
 
   equationText: {
-    fontSize: s.size(15)
+    fontSize: scale(15)
   },
 
   statementEqualSpacing: {
@@ -129,15 +130,15 @@ const stylesForScaling = (s: Scaling) => StyleSheet.create({
     backgroundColor: '#ffe',
     justifyContent: 'center',
     alignItems: 'center',
-    height: s.height(50),
-    gap: s.size(10)
+    height: scaleH(50),
+    gap: scale(10)
   },
 
   equationBorderTextEqualSpacing: {
-    fontSize: s.size(25),
-    borderWidth: s.size(2),
-    borderRadius: s.size(10),
-    padding: s.size(6),
+    fontSize: scale(25),
+    borderWidth: scale(2),
+    borderRadius: scale(10),
+    padding: scale(6),
   },
 
   input: {
