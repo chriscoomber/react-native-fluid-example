@@ -1,20 +1,165 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import useScaling, { Scaling, MIN_HEIGHT, MIN_WIDTH } from './hooks/useScaling';
+import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill, BsFillDiamondFill } from "react-icons/bs";
 
 export default function App() {
+  const scaling = useScaling();
+  const styles = stylesForScaling(scaling);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.mainColumn}>
+      <View style={styles.topBar}>
+        <TouchableOpacity>
+          <BsFillArrowLeftSquareFill size={scaling.size(40)}/>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <BsFillArrowRightSquareFill size={scaling.size(40)}/>
+        </TouchableOpacity>
+        <Text style={{fontSize: scaling.size(20), marginLeft: scaling.width(30)}}>Title</Text>
+      </View>
+      
+      <View style={styles.content}>
+        <View style={styles.statement}>
+          <Text style={styles.equationText}>What is: </Text>
+          <Text style={styles.equationBorderText}>1</Text>
+          <Text style={styles.equationText}>+</Text>
+          <Text style={styles.equationBorderText}>2</Text>
+          <Text style={styles.equationText}>=</Text>
+          <Text style={styles.equationBorderText}>?</Text>
+        </View>
+
+        <View style={styles.statementEqualSpacing}>
+          <Text style={styles.equationText}>What is: </Text>
+          <Text style={styles.equationBorderTextEqualSpacing}>1</Text>
+          <Text style={styles.equationText}>+</Text>
+          <Text style={styles.equationBorderTextEqualSpacing}>2</Text>
+          <Text style={styles.equationText}>=</Text>
+          <Text style={styles.equationBorderTextEqualSpacing}>?</Text>
+        </View>
+
+        <View style={[styles.input, {height: scaling.height(150)}]}>
+          <View style={styles.hintRow}>
+            <View style={styles.hintColumn}>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+            </View>
+            <View style={styles.hintColumn}>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+            </View>
+            <View style={styles.hintColumn}>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+              <BsFillDiamondFill size={scaling.size(20)}/>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.bottomBar}>
+        <Text style={{fontSize: scaling.size(10)}}>This is some small print</Text>
+      </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
+const stylesForScaling = (s: Scaling) => StyleSheet.create({
+  mainColumn: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+    minWidth: MIN_WIDTH,
+    minHeight: MIN_HEIGHT
+  },
+
+  topBar: {
+    flexGrow: 0,
+    flexBasis: 'content',
+    flexDirection: 'row',
+    backgroundColor: '#cfc',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    heignt: s.size(45)
+  },
+
+  content: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#eee',
+  },
+
+  bottomBar: {
+    flexGrow: 0,
+    flexBasis: 'content',
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+
+  statement: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#ffe',
     justifyContent: 'center',
+    alignItems: 'center',
+    height: s.height(50),
+    gap: s.width(10)
+  },
+
+  equationBorderText: {
+    fontSize: s.size(25),
+    borderWidth: s.size(2),
+    borderRadius: s.size(10),
+    paddingHorizontal: s.width(6),
+    paddingVertical: s.height(6)
+  },
+
+  equationText: {
+    fontSize: s.size(15)
+  },
+
+  statementEqualSpacing: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#ffe',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: s.height(50),
+    gap: s.size(10)
+  },
+
+  equationBorderTextEqualSpacing: {
+    fontSize: s.size(25),
+    borderWidth: s.size(2),
+    borderRadius: s.size(10),
+    padding: s.size(6),
+  },
+
+  input: {
+    flex: 1,
+    backgroundColor: '#eff',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  hintColumn: {
+    flexGrow: 0,
+    flexBasis: 'content',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  hintRow: {
+    flexGrow: 0,
+    flexBasis: 'content',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
