@@ -1,7 +1,7 @@
 import { useWindowDimensions } from "react-native";
 
-export const MIN_WIDTH = 360;
-export const MIN_HEIGHT = 320;
+export const MIN_WIDTH = 300;
+export const MIN_HEIGHT = 300;
 
 export interface Scaling {
     /** Scale with viewport width - unchanged below min width */

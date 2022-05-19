@@ -1,20 +1,35 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { PixelRatio, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import useScaling, { Scaling, MIN_HEIGHT, MIN_WIDTH } from './hooks/useScaling';
-import { BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill, BsFillDiamondFill } from "react-icons/bs";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 
 export default function App() {
+  return (
+    <SafeAreaProvider>
+      <StatusBar/>
+      <MainScreen/>
+    </SafeAreaProvider>
+  );
+}
+
+function MainScreen() {
   const scaling = useScaling();
   const { scaleW, scaleH, scale} = scaling;
   const styles = stylesForScaling(scaling);
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.mainColumn}>
+    
+    <SafeAreaView style={[styles.mainColumn, {paddingTop: insets.top}]}>
+      <StatusBar backgroundColor='#cfc' barStyle='dark-content'/>
       <View style={styles.topBar}>
         <TouchableOpacity>
-          <BsFillArrowLeftSquareFill size={scale(40)}/>
+          <FontAwesome name="arrow-circle-left" size={scale(40)}/>
         </TouchableOpacity>
         <TouchableOpacity>
-        <BsFillArrowRightSquareFill size={scale(40)}/>
+          <FontAwesome name="arrow-circle-right" size={scale(40)}/>
         </TouchableOpacity>
         <Text style={{fontSize: scale(20), marginLeft: scaleW(30)}}>Title</Text>
       </View>
@@ -39,21 +54,21 @@ export default function App() {
         </View>
 
         <View style={[styles.input, {height: scaleH(150)}]}>
-          <View style={styles.hintRow}>
-            <View style={styles.hintColumn}>
-              <BsFillDiamondFill size={scale(20)}/>
-              <BsFillDiamondFill size={scale(20)}/>
-              <BsFillDiamondFill size={scale(20)}/>
+          <View style={styles.hintColumn}>
+            <View style={styles.hintRow}>
+              <FontAwesome name="diamond" size={scale(20)}/>
+              <FontAwesome name="diamond" size={scale(20)}/>
+              <FontAwesome name="diamond" size={scale(20)}/>
             </View>
-            <View style={styles.hintColumn}>
-              <BsFillDiamondFill size={scale(20)}/>
-              <BsFillDiamondFill size={scale(20)}/>
-              <BsFillDiamondFill size={scale(20)}/>
+            <View style={styles.hintRow}>
+              <FontAwesome name="diamond" size={scale(20)}/>
+              <FontAwesome name="diamond" size={scale(20)}/>
+              <FontAwesome name="diamond" size={scale(20)}/>
             </View>
-            <View style={styles.hintColumn}>
-              <BsFillDiamondFill size={scale(20)}/>
-              <BsFillDiamondFill size={scale(20)}/>
-              <BsFillDiamondFill size={scale(20)}/>
+            <View style={styles.hintRow}>
+              <FontAwesome name="diamond" size={scale(20)}/>
+              <FontAwesome name="diamond" size={scale(20)}/>
+              <FontAwesome name="diamond" size={scale(20)}/>
             </View>
           </View>
         </View>
@@ -62,7 +77,8 @@ export default function App() {
       <View style={styles.bottomBar}>
         <Text style={{fontSize: scale(10)}}>This is some small print</Text>
       </View>
-    </View>
+    </SafeAreaView>
+    
   );
 }
 
@@ -79,7 +95,7 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
 
   topBar: {
     flexGrow: 0,
-    flexBasis: 'content',
+    flexBasis: 'auto',
     flexDirection: 'row',
     backgroundColor: '#cfc',
     justifyContent: 'flex-start',
@@ -95,7 +111,7 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
 
   bottomBar: {
     flexGrow: 0,
-    flexBasis: 'content',
+    flexBasis: 'auto',
     flexDirection: 'row',
     backgroundColor: '#fff',
     justifyContent: 'space-evenly',
@@ -109,7 +125,6 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
     justifyContent: 'center',
     alignItems: 'center',
     height: scaleH(50),
-    gap: scaleW(10)
   },
 
   equationBorderText: {
@@ -117,7 +132,9 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
     borderWidth: scale(2),
     borderRadius: scale(10),
     paddingHorizontal: scaleW(6),
-    paddingVertical: scaleH(6)
+    paddingVertical: scaleH(6),
+    marginHorizontal: scaleW(5),
+    textAlign: 'center',
   },
 
   equationText: {
@@ -131,7 +148,6 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
     justifyContent: 'center',
     alignItems: 'center',
     height: scaleH(50),
-    gap: scale(10)
   },
 
   equationBorderTextEqualSpacing: {
@@ -139,6 +155,8 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
     borderWidth: scale(2),
     borderRadius: scale(10),
     padding: scale(6),
+    marginHorizontal: scale(5),
+    textAlign: 'center',
   },
 
   input: {
@@ -150,7 +168,7 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
 
   hintColumn: {
     flexGrow: 0,
-    flexBasis: 'content',
+    flexBasis: 'auto',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
@@ -158,7 +176,7 @@ const stylesForScaling = ({scaleW, scaleH, scale}: Scaling) => StyleSheet.create
 
   hintRow: {
     flexGrow: 0,
-    flexBasis: 'content',
+    flexBasis: 'auto',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
